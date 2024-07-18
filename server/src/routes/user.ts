@@ -2,6 +2,7 @@ import { Hono } from "hono";
 import { PrismaClient } from '@prisma/client/edge'
 import { withAccelerate } from '@prisma/extension-accelerate'
 import { sign } from 'hono/jwt'
+import { signinInput , signupInput} from "../../../common/src/index"
 
 export const userRouter = new Hono<{
     Bindings : {
@@ -18,13 +19,13 @@ export const userRouter = new Hono<{
   
     try {
       const body = await c.req.json();
-      console.log('Received body:', body);
-  
-      if (!body.email || !body.password) {
-        c.status(400);
-        return c.json({ error: "Email and password are required" });
+      const {success} = signupInput.safeParse(body);
+      if(!success) {
+        c.status(411);
+        return c.json({
+            message: "Inputs not correct"
+        })
       }
-  
       // Check if user already exists
       const existingUser = await prisma.user.findUnique({
         where: { email: body.email }
@@ -37,6 +38,7 @@ export const userRouter = new Hono<{
   
       const user = await prisma.user.create({
         data: {
+          username : body.username,
           email: body.email,
           password: body.password // Remember to hash this password
         }
@@ -59,6 +61,13 @@ userRouter.post('/signin', async (c) => {
 	}).$extends(withAccelerate());
 
 	const body = await c.req.json();
+  const {success} = signinInput.safeParse(body);
+  if(!success) {
+    c.status(411);
+    return c.json({
+        message: "Inputs not correct"
+    })
+  }
 	const user = await prisma.user.findUnique({
 		where: {
 			email: body.email
