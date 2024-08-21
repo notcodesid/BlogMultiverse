@@ -5,12 +5,13 @@ import { Textarea } from "@/components/ui/textarea"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import { TwitterIcon, FacebookIcon, InstagramIcon, LinkedinIcon } from "lucide-react"
+import { Appbar } from "@/components/appbar"
 
 export default function Footer() {
   return (
     <>
-    <div className="flex flex-col min-h-dvh">
-      <section className="w-full py-12 md:py-24 lg:py-32 bg-muted">
+    <div className="flex flex-col">
+      <section className="w-full  py-12 md:py-24 lg:py-32 bg-muted">
         <div className="container px-4 md:px-6 text-center space-y-4">
           <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">Get in Touch</h1>
           <p className="max-w-[700px] mx-auto text-muted-foreground md:text-xl">
@@ -19,8 +20,8 @@ export default function Footer() {
           </p>
         </div>
       </section>
-      <section className="w-full py-12 md:py-24 lg:py-32">
-        <div className="container px-4 md:px-6 grid md:grid-cols-2 gap-12">
+      <section className="w-full mt-10 ">
+        <div className="container md:px-6 md:w-2/4">
           <div>
             <form className="space-y-4">
               <div className="grid grid-cols-2 gap-4">
@@ -37,18 +38,10 @@ export default function Footer() {
                 <Label htmlFor="message">Message</Label>
                 <Textarea id="message" placeholder="Your message" rows={5} />
               </div>
-              <Button type="submit">Send Message</Button>
+              <Button type="submit" className="w-full">Send Message</Button>
             </form>
           </div>
-          <div className="space-y-6">
-            <div className="space-y-2">
-              <h2 className="text-2xl font-bold">Contact Information</h2>
-              <div className="space-y-1 text-muted-foreground">
-                <p>123 Main Street</p>
-                <p>Anytown, USA 12345</p>
-                <p>Phone: (123) 456-7890</p>
-              </div>
-            </div>
+          <div className="space-y-6 text-center flex justify-center items-center my-10">
             <div className="space-y-2">
               <h2 className="text-2xl font-bold">Follow Us</h2>
               <div className="flex gap-4">
